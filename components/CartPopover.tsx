@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
     Popover,
@@ -9,12 +10,14 @@ import {
 import { useCart } from "@/contexts/cartContext";
 import { Trash2 } from "lucide-react";
 import Link from "next/link";
+
 interface CartPopoverProps {
     children: React.ReactNode;
 }
 
 export default function CartPopover({ children }: CartPopoverProps) {
     const { state, dispatch } = useCart();
+    const [open, setOpen] = useState(false);
 
     const handleRemove = (id: number) => {
         dispatch({ type: "REMOVE_ITEM", payload: id });
@@ -29,8 +32,12 @@ export default function CartPopover({ children }: CartPopoverProps) {
         .reduce((total, item) => total + item.price * item.quantity, 0)
         .toFixed(2);
 
+    const handleCheckoutClick = () => {
+        setOpen(false); // Close popover before navigation
+    };
+
     return (
-        <Popover>
+        <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>{children}</PopoverTrigger>
             <PopoverContent className="w-80">
                 <h2 className="text-lg font-semibold mb-4">Your Cart</h2>
@@ -91,7 +98,11 @@ export default function CartPopover({ children }: CartPopoverProps) {
                             <p className="text-lg font-semibold">
                                 Total: ${totalPrice}
                             </p>
-                            <Button className="w-full mt-4" asChild>
+                            <Button
+                                className="w-full mt-4"
+                                asChild
+                                onClick={handleCheckoutClick}
+                            >
                                 <Link href="/checkout">
                                     Proceed to Checkout
                                 </Link>

@@ -1,21 +1,16 @@
 "use client";
 
 import ProductCard from "./ProductCard";
-import { Input } from "@/components/ui/input";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
+
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { useSWRConfig } from "swr";
 import { useProduct } from "@/contexts/productContext";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 export default function ProductList() {
-    const { state, dispatch } = useProduct();
+    const { state } = useProduct();
     const { mutate } = useSWRConfig();
 
     // Filter and sort products
@@ -37,19 +32,6 @@ export default function ProductList() {
                     return 0;
             }
         });
-
-    // Pagination handlers
-    const goToPreviousPage = () => {
-        if (state.page > 1) {
-            dispatch({ type: "SET_PAGE", payload: state.page - 1 });
-        }
-    };
-
-    const goToNextPage = () => {
-        if (state.page < state.totalPages) {
-            dispatch({ type: "SET_PAGE", payload: state.page + 1 });
-        }
-    };
 
     // Loading state
     if (!state.products.length) {
@@ -77,7 +59,7 @@ export default function ProductList() {
             <h2 className="text-3xl font-bold mb-8 text-center">
                 Our Products
             </h2>
-            <div className="flex flex-col sm:flex-row gap-4 mb-8">
+            {/* <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <Input
                     placeholder="Search products..."
                     value={state.search}
@@ -110,7 +92,7 @@ export default function ProductList() {
                         <SelectItem value="title-desc">Title: Z-A</SelectItem>
                     </SelectContent>
                 </Select>
-            </div>
+            </div> */}
             {filteredProducts.length === 0 ? (
                 <div className="text-center">
                     <p className="text-gray-500 mb-4">No products found.</p>
@@ -134,25 +116,11 @@ export default function ProductList() {
                         ))}
                     </div>
                     <div className="flex justify-center items-center gap-4 mt-8">
-                        <Button
-                            variant="outline"
-                            onClick={goToPreviousPage}
-                            disabled={state.page === 1}
-                            aria-label="Previous page"
-                        >
-                            Previous
-                        </Button>
-                        <span className="text-gray-600">
-                            Page {state.page} of {state.totalPages}
-                        </span>
-                        <Button
-                            variant="outline"
-                            onClick={goToNextPage}
-                            disabled={state.page === state.totalPages}
-                            aria-label="Next page"
-                        >
-                            Next
-                        </Button>
+                        <Link href="/products">
+                            <Button className="w-full">
+                                All products <ArrowRight />
+                            </Button>
+                        </Link>
                     </div>
                 </>
             )}
