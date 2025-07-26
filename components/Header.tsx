@@ -32,7 +32,7 @@ export default function Header() {
                 </Link>
 
                 {/* Navigation Links */}
-                <nav className="hidden md:flex space-x-6">
+                <nav className="hidden md:flex space-x-6 font-semibold">
                     <Link
                         href="/"
                         className="text-gray-600 hover:text-gray-800"

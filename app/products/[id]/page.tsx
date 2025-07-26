@@ -104,7 +104,7 @@ export default function ProductDetailsPage({
     return (
         <section className="container mx-auto px-4 py-12">
             <Link
-                href="/"
+                href="/products"
                 className="text-blue-600 hover:underline mb-4 inline-block"
             >
                 &larr; Back to Products

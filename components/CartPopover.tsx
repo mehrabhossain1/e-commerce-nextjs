@@ -7,7 +7,8 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 import { useCart } from "@/contexts/cartContext";
-import { Link, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
+import Link from "next/link";
 interface CartPopoverProps {
     children: React.ReactNode;
 }

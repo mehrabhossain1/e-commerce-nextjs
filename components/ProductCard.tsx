@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { useCart } from "@/contexts/cartContext";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Product {
     id: number;
@@ -56,7 +57,9 @@ export default function ProductCard({ product }: ProductCardProps) {
             </CardHeader>
             <CardContent className="flex-grow">
                 <CardTitle className="text-lg font-semibold">
-                    {product.title}
+                    <Link href={`/products/${product.id}`}>
+                        {product.title}
+                    </Link>
                 </CardTitle>
                 <p className="text-sm text-gray-500 mt-1">
                     ${product.price.toFixed(2)}
