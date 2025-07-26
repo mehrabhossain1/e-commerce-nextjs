@@ -12,7 +12,6 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { useSWRConfig } from "swr";
-import Link from "next/link";
 import { useProduct } from "@/contexts/productContext";
 
 export default function ProductList() {
