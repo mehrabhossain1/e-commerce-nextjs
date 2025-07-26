@@ -6,10 +6,18 @@ import { ShoppingCart } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 import CartPopover from "./CartPopover";
+import { useState, useEffect } from "react";
 import { useCart } from "@/contexts/cartContext";
 
 export default function Header() {
     const { state } = useCart();
+    const [isHydrated, setIsHydrated] = useState(false);
+
+    // Set isHydrated to true after client-side mount
+    useEffect(() => {
+        setIsHydrated(true);
+    }, []);
+
     const itemCount = state.items.reduce(
         (total, item) => total + item.quantity,
         0
@@ -43,6 +51,12 @@ export default function Header() {
                     >
                         About
                     </Link>
+                    <Link
+                        href="/checkout"
+                        className="text-gray-600 hover:text-gray-800"
+                    >
+                        Checkout
+                    </Link>
                 </nav>
 
                 {/* Cart Icon with Popover */}
@@ -50,7 +64,7 @@ export default function Header() {
                     <CartPopover>
                         <Button variant="outline" className="relative">
                             <ShoppingCart className="h-5 w-5" />
-                            {itemCount > 0 && (
+                            {isHydrated && itemCount > 0 && (
                                 <Badge className="absolute -top-2 -right-2 bg-red-500 text-white">
                                     {itemCount}
                                 </Badge>

@@ -13,21 +13,21 @@ export const products: Product[] = [
         price: 59.99,
         description:
             "High-quality wireless headphones with noise cancellation.",
-        image: "/images/headphones.jpg",
+        image: "https://img.freepik.com/free-vector/online-shopping-concept-landing-page_52683-20156.jpg",
     },
     {
         id: 2,
         name: "Smartphone Case",
         price: 19.99,
         description: "Durable and stylish case for your smartphone.",
-        image: "/images/phone-case.jpg",
+        image: "https://img.freepik.com/free-vector/online-shopping-concept-landing-page_52683-20156.jpg",
     },
     {
         id: 3,
         name: "Portable Charger",
         price: 29.99,
         description: "Compact power bank with fast-charging capabilities.",
-        image: "/images/charger.jpg",
+        image: "https://img.freepik.com/free-vector/online-shopping-concept-landing-page_52683-20156.jpg",
     },
     {
         id: 4,
@@ -35,6 +35,6 @@ export const products: Product[] = [
         price: 99.99,
         description:
             "Track your fitness and stay connected with this smart watch.",
-        image: "/images/smart-watch.jpg",
+        image: "https://img.freepik.com/free-vector/online-shopping-concept-landing-page_52683-20156.jpg",
     },
 ];

@@ -1,7 +1,7 @@
 "use client";
 
+import { cartReducer, CartState } from "@/reducers/cartReducer";
 import { createContext, useContext, useReducer, useEffect } from "react";
-import { cartReducer, CartState, CartItem } from "@/reducers/cartReducer";
 
 interface CartContextType {
     state: CartState;
@@ -10,26 +10,26 @@ interface CartContextType {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-export const CartProvider = ({ children }: { children: React.ReactNode }) => {
-    const initialState: CartState = {
-        items: [],
-    };
-
-    const [state, dispatch] = useReducer(cartReducer, initialState);
-
-    // Load cart from localStorage on mount (bonus feature)
-    useEffect(() => {
+// Initialize state from localStorage if available
+const getInitialState = (): CartState => {
+    if (typeof window !== "undefined") {
         const savedCart = localStorage.getItem("cart");
         if (savedCart) {
-            const parsedCart = JSON.parse(savedCart);
-            // Initialize cart with saved items
-            parsedCart.forEach((item: CartItem) => {
-                dispatch({ type: "ADD_ITEM", payload: item });
-            });
+            try {
+                const parsedCart = JSON.parse(savedCart);
+                return { items: parsedCart };
+            } catch (error) {
+                console.error("Failed to parse cart from localStorage:", error);
+            }
         }
-    }, []);
+    }
+    return { items: [] };
+};
 
-    // Save cart to localStorage on update
+export const CartProvider = ({ children }: { children: React.ReactNode }) => {
+    const [state, dispatch] = useReducer(cartReducer, getInitialState());
+
+    // Save cart to localStorage on state updates
     useEffect(() => {
         localStorage.setItem("cart", JSON.stringify(state.items));
     }, [state.items]);

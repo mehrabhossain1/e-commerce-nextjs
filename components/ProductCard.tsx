@@ -13,10 +13,10 @@ import Image from "next/image";
 
 interface Product {
     id: number;
-    name: string;
+    title: string;
     price: number;
     description: string;
-    image: string;
+    thumbnail: string;
 }
 
 interface ProductCardProps {
@@ -31,7 +31,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             type: "ADD_ITEM",
             payload: {
                 id: product.id,
-                name: product.name,
+                name: product.title,
                 price: product.price,
                 quantity: 1,
             },
@@ -43,16 +43,20 @@ export default function ProductCard({ product }: ProductCardProps) {
             <CardHeader>
                 <div className="relative w-full h-48">
                     <Image
-                        src={product.image}
-                        alt={product.name}
+                        src={product.thumbnail}
+                        alt={product.title}
                         fill
                         className="object-cover rounded-t-md"
+                        onError={(e) => {
+                            e.currentTarget.src =
+                                "https://via.placeholder.com/300";
+                        }}
                     />
                 </div>
             </CardHeader>
             <CardContent className="flex-grow">
                 <CardTitle className="text-lg font-semibold">
-                    {product.name}
+                    {product.title}
                 </CardTitle>
                 <p className="text-sm text-gray-500 mt-1">
                     ${product.price.toFixed(2)}
